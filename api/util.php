@@ -5,7 +5,7 @@ function dbConnect()
 {
 	try
 	{
-		$conn = new PDO('mysql:dbname=roar1827_Recipe;host=localhost', 'roar1827_a', 'oakley');
+		$conn = new PDO('mysql:dbname=roar1827_library;host=localhost', 'roar1827_a', 'oakley');
 		//$conn = mysql_connect('localhost', 'roar1827_a', 'oakley');
 		//$db_selected = mysql_select_db('roar1827_Recipe', $conn);
 		//mysql_select_db('Recipe')or die("cannot select DB");
@@ -24,7 +24,7 @@ function dbConnect()
 
 function loggedIn(){
 	//Set this value to the Session Timeout in Minutes
-	$sessionTimeOut = 240;
+	/*$sessionTimeOut = 240;
 	try
 	{
     if (isset($_SESSION['UserID']) && isset($_SESSION['isLoggedIn'])){
@@ -59,7 +59,8 @@ function loggedIn(){
 	}
 	catch(PDOException $e){
 		return false;
-	}
+	}*/
+	return true;
 }
 //function isAdmin(){
 //   if (isset($_SESSION['UserID']) && isset($_SESSION['isLoggedIn'])){
