@@ -1,4 +1,4 @@
-﻿var app = angular.module('bake', [ 'ngResource']);
+﻿var app = angular.module('lib', [ 'ngResource']);
 //This configures the routes and associates each route with a template
 app.config(function ($routeProvider) {
   $routeProvider

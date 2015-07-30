@@ -34,4 +34,16 @@ app.service('bookService', function ($resource, $q) {
 		return deferred.promise;
 	}*/
 
+	/**
+	* Returns a list of books for a given user
+	* @method getMyBooks
+	* @return {Promise} resolves [{Book}]
+	*/
+	this.getMyBooks = function(){
+		var deferred = $q.defer();
+		var devSrv = $resource('/api/index.php/getMyBooks',{},{'getMyBooks': { method: 'GET', isArray: true}});
+		var res = devSrv.getMyBooks({},function(){deferred.resolve(res);});
+		return deferred.promise;
+	};
+
 });

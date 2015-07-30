@@ -3,7 +3,7 @@
 ?>
 <!DOCTYPE html>
 
-<html data-ng-app="bake" id="ng-app">
+<html data-ng-app="lib" id="ng-app">
 <head>
     <title>Library</title>
 
@@ -61,11 +61,13 @@
     <!-- Controllers -->
     <script src="app/controllers/userController.js"></script>
     <script src="app/controllers/registerFormController.js"></script>
+    <script src="app/controllers/bookController.js"></script>
 
 
     <!--Services-->
     <script src="app/services/loginService.js"></script>
     <script src="app/services/adaptUserService.js"></script>
+    <script src="app/services/bookService.js"></script>
 
 
     <!-- Directives -->

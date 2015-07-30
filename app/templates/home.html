@@ -1,4 +1,8 @@
-<div >
+<div ng-controller="bookController as book">
 Home
+
+<div ng-repeat="abook in books">
+          <img ng-src="/images/{{abook.Image_Spine}}">
+</div>
 
 </div>
