@@ -12,6 +12,18 @@ app.controller('bookController', function ($scope, $location, $rootScope, bookSe
 		}, function(reason) {
 			$scope.books = reason;
 		});
+
+	
+		$scope.lookupBook = function(ISBN){
+			var promise = bookService.lookupBook(ISBN);
+			promise.then(function(value){
+				$scope.lookupBookRes = value;
+
+			}, function(reason) {
+				$scope.lookupBookRes = reason;
+			});
+
+		};
 		
 
 

@@ -14,15 +14,15 @@ Home
  <div class="row">
   <div class="col-lg-6">
     <div class="input-group">
-      <input type="text" class="form-control" placeholder="ISBN...">
+      <input type="text" class="form-control" placeholder="ISBN..." ng-model="isbntest" >
       <span class="input-group-btn">
-        <button class="btn btn-default" type="button">Go!</button>
+        <button class="btn btn-default" type="button" ng-click="lookupBook(isbntest)">Go!</button>
       </span>
     </div><!-- /input-group -->
   </div><!-- /.col-lg-6 -->
 </div><!-- /.row -->
-
-
+{{lookupBookRes.Items.Item.ItemAttributes.Author}}<br/>
+{{lookupBookRes.Items.Item.ItemAttributes.Title}}
 
 
 

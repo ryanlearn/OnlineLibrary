@@ -11,7 +11,7 @@
 	//for an Angular service to call this function create $resource for path /api/adaptSeed.php/example_path
 	$slimApp->get('/db', 'db');
 	$slimApp->get('/getMyBooks', 'getMyBooks');
-	$slimApp->get('/lookupBook/:id', 'lookupBook');
+	$slimApp->post('/lookupBook', function(){lookupBook();});
 
 	function db(){
 		//echo "working";
@@ -40,7 +40,15 @@
 	}
 
 
-	function lookupBook($id){
+	function lookupBook(){
+
+		global $slimApp;
+		$conn = dbConnect();
+		$request = $slimApp->request();
+		$body = $request->getBody();
+		$input = json_decode($body);
+		$ISBN = $input->ISBN;
+
 		defined('AWS_API_KEY') or define('AWS_API_KEY', 'AKIAJ3WKL6FNDRODBOOA');
 		defined('AWS_API_SECRET_KEY') or define('AWS_API_SECRET_KEY', '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');
 		defined('AWS_ASSOCIATE_TAG') or define('AWS_ASSOCIATE_TAG', 'clemeventu-20');
@@ -50,8 +58,9 @@
 		try
 		{
 		    $amazonEcs = new AmazonECS(AWS_API_KEY, AWS_API_SECRET_KEY, 'CA', AWS_ASSOCIATE_TAG);
-		    $response = $amazonEcs->responseGroup('Large')->lookup($id);
-		    //echo $id;
+		    $ISBN = (string)$ISBN;
+		    $response = $amazonEcs->responseGroup('Large')->lookup($ISBN);
+		    
 		    echo json_encode($response);
 		}
 		catch(Exception $e)

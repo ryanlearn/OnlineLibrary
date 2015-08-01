@@ -46,4 +46,26 @@ app.service('bookService', function ($resource, $q) {
 		return deferred.promise;
 	};
 
+	/**
+	* Returns a list of books for a given user
+	* @method lookupBook
+	* @return {Promise} resolves [{Book}]
+	*/
+	this.lookupBook = function (ISBN) {
+		var deferred = $q.defer();
+		var devSrv = $resource('/api/index.php/lookupBook/',{},{'lookupBook': { method: 'POST', isArray: false}});
+		var res = devSrv.lookupBook({},{
+			ISBN: ISBN
+		},function(){
+			if (res.status == 0) {
+				deferred.resolve(res);
+			} else {
+				deferred.reject(res);
+			}
+		},function(){
+			deferred.reject(res);
+		});
+		return deferred.promise;
+	};
+
 });
