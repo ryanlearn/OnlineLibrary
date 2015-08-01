@@ -52,7 +52,8 @@
 
 
     <!-- UI Libs -->
-    <!--<script src="Scripts/bootstrap.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="Scripts/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
     
 
 

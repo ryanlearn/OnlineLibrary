@@ -1,8 +1,29 @@
 <div ng-controller="bookController as book">
 Home
 
-<div ng-repeat="abook in books">
-          <img ng-src="/images/{{abook.Image_Spine}}">
-</div>
+
+	<table>
+	<tr>
+		<td ng-repeat="abook in books">
+          <img ng-src="/images/{{abook.Image_Spine}}" style="margin: 2px 0px">
+    	</td>
+    </tr>
+    </table>
+
+    Add a book
+ <div class="row">
+  <div class="col-lg-6">
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="ISBN...">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button">Go!</button>
+      </span>
+    </div><!-- /input-group -->
+  </div><!-- /.col-lg-6 -->
+</div><!-- /.row -->
+
+
+
+
 
 </div>
