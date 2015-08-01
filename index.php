@@ -45,8 +45,9 @@
     </div>
 
     <!-- Vendor Libs: jQuery only used for Bootstrap functionality -->
-    <script src="Scripts/angular.min.js"></script>
-    <script src="Scripts/angular-resource.js"></script>
+    <script src="Scripts/angular.js" type="text/javascript"></script>
+    <script src="Scripts/angular-resource.js" type="text/javascript"></script>
+    <script src="Scripts/angular-route.js" type="text/javascript"></script>
 
 
 
@@ -56,7 +57,7 @@
 
 
     <!-- App libs -->
-    <script src="app/app.js"></script>
+    <script src="app/app.js" type="text/javascript"></script>
 
     <!-- Controllers -->
     <script src="app/controllers/userController.js"></script>

@@ -1,4 +1,4 @@
-﻿var app = angular.module('lib', [ 'ngResource']);
+﻿var app = angular.module('lib', ['ngResource', 'ngRoute']);
 //This configures the routes and associates each route with a template
 app.config(function ($routeProvider) {
   $routeProvider
