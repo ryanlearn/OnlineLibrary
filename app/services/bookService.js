@@ -68,4 +68,24 @@ app.service('bookService', function ($resource, $q) {
 		return deferred.promise;
 	};
 
+	this.addBook = function (ISBN, Title, Subtitle, Author) {
+		var deferred = $q.defer();
+		var devSrv = $resource('/api/index.php/addBook/',{},{'addBook': { method: 'POST', isArray: false}});
+		var res = devSrv.addBook({},{
+			ISBN: ISBN,
+			Title: Title,
+			Subtitle: Subtitle,
+			Author: Author
+		},function(){
+			if (res.status == 0) {
+				deferred.resolve(res);
+			} else {
+				deferred.reject(res);
+			}
+		},function(){
+			deferred.reject(res);
+		});
+		return deferred.promise;
+	};
+
 });

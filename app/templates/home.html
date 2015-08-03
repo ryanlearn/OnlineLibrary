@@ -22,7 +22,13 @@ Home
   </div><!-- /.col-lg-6 -->
 </div><!-- /.row -->
 {{lookupBookRes.Items.Item.ItemAttributes.Author}}<br/>
-{{lookupBookRes.Items.Item.ItemAttributes.Title}}
+{{lookupBookRes.Items.Item.ItemAttributes.Title}}<br/>
+<img src="{{lookupBookRes.Items.Item.LargeImage.URL}}"><br/>
+<div class="row">
+{{Author}}
+{{Subtitle}}
+  <button class="btn btn-default" type="button" ng-click="addBook(Author,Title,Subtitle,ISBN)">Add Book</button>
+</div>
 
 
 
