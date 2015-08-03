@@ -13,6 +13,47 @@
 	$slimApp->get('/getMyBooks', 'getMyBooks');
 	$slimApp->post('/lookupBook', function(){lookupBook();});
 	$slimApp->post('/addBook', function(){addBook();});
+	$slimApp->get('/testRest', 'testRest');
+
+	function CallAPI($method, $url, $data = false)
+	{
+	    $curl = curl_init();
+
+	    switch ($method)
+	    {
+	        case "POST":
+	            curl_setopt($curl, CURLOPT_POST, 1);
+
+	            if ($data)
+	                curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+	            break;
+	        case "PUT":
+	            curl_setopt($curl, CURLOPT_PUT, 1);
+	            break;
+	        default:
+	            if ($data)
+	                $url = sprintf("%s?%s", $url, http_build_query($data));
+	    }
+
+	    // Optional Authentication:
+	    curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+	    curl_setopt($curl, CURLOPT_USERPWD, "username:password");
+
+	    curl_setopt($curl, CURLOPT_URL, $url);
+	    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+
+	    $result = curl_exec($curl);
+
+	    curl_close($curl);
+
+	    return $result;
+	}
+
+	function testRest(){
+			$testRest = CallAPI("GET","http://isbndb.com/api/v2/json/4UYZ2W9Z/book/0399530649");
+			echo $testRest;
+	}
+
 
 	function db(){
 		$conn = dbConnect();
@@ -35,20 +76,14 @@
 		$input = json_decode($body);
 		$ISBN = $input->ISBN;
 
-		defined('AWS_API_KEY') or define('AWS_API_KEY', 'AKIAJ3WKL6FNDRODBOOA');
-		defined('AWS_API_SECRET_KEY') or define('AWS_API_SECRET_KEY', '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');
-		defined('AWS_ASSOCIATE_TAG') or define('AWS_ASSOCIATE_TAG', 'clemeventu-20');
-
-		require 'AmazonECS.class.php';
-
 		try
 		{
-		    $amazonEcs = new AmazonECS(AWS_API_KEY, AWS_API_SECRET_KEY, 'CA', AWS_ASSOCIATE_TAG);
+
 		    $ISBN = (string)$ISBN;
-//->optionalParameters(array('IdType' => 'ISBN'))
-		    $response = $amazonEcs->responseGroup('Large')->lookup($ISBN);
-		    
-		    echo json_encode($response);
+		    $URL = "http://isbndb.com/api/v2/json/4UYZ2W9Z/book/".$ISBN;
+		    $response = CallAPI("GET",$URL);
+		    echo $response;
+		    //echo json_encode($response);
 		}
 		catch(Exception $e)
 		{
@@ -67,6 +102,7 @@
 										WHERE Inventory.OwnerID = 1");
 			$query->execute($params);
 			$dataObj = $query->fetchAll(PDO::FETCH_ASSOC);
+			
 			echo json_encode($dataObj);
 
 		}
