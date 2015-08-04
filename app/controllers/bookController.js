@@ -43,6 +43,7 @@ $scope.testpass = "asdf";
 			});
 
 		};
+<<<<<<< HEAD
 		
 
 		function ModalController($scope){
@@ -67,6 +68,8 @@ $scope.testpass = "asdf";
 	    }
 }
 
+=======
+>>>>>>> FETCH_HEAD
 
 
 
