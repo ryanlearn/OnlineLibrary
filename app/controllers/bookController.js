@@ -18,10 +18,9 @@ $scope.testpass = "asdf";
 			var promise = bookService.lookupBook(ISBN);
 			promise.then(function(value){
 				$scope.lookupBookRes = value;
-				$scope.author = lookupBookRes.data[0].author_data[0].name;
-				$scope.ISBN = lookupBookRes.data[0].isbn13;
-				$scope.bookTitle = lookupBookRes.data[0].title;
-				$scope.subtitle = "no subtitles";
+				//$scope.author = lookupBookRes.data[0].author_data[0].name;
+				//$scope.ISBN = lookupBookRes.data[0].isbn13;
+				//$scope.bookTitle = lookupBookRes.data[0].title;
 
 			}, function(reason) {
 				$scope.lookupBookRes = reason;
@@ -32,7 +31,10 @@ $scope.testpass = "asdf";
 
 		$scope.addBook = function(){
 			$scope.testpass = $scope.bookTitle;
-			var promise = bookService.addBook($scope.ISBN,$scope.bookTitle,$scope.Subtitle,$scope.Author);
+			var promise = bookService.addBook($scope.lookupBookRes.data[0].isbn13,
+												$scope.lookupBookRes.data[0].title,
+												"No Subtitle",
+												$scope.lookupBookRes.data[0].author_data[0].name);
 			promise.then(function(value){
 				$scope.addBookRes = value;
 
