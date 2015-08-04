@@ -43,8 +43,6 @@ $scope.testpass = "asdf";
 			});
 
 		};
-		
-
 
 
 
