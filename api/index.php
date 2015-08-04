@@ -118,7 +118,7 @@
 
 		/* Font properties */
 		$draw->setFont('Bookman-DemiItalic');
-		$draw->setFontSize( 6 );
+		$draw->setFontSize( 10 );
 
 		/* Create text */
 		$image->annotateImage($draw, 10, 10, 90, $title);
@@ -128,7 +128,7 @@
 		header('Content-type: image/png');
 		$imagePath = '../images/'.$ISBN.'.png';
 		$image->writeImage($imagePath);
-		echo $image;
+
 	}
 
 	function addBook(){
@@ -137,7 +137,6 @@
 		//1) check if book already exists in database
 		//  --> if no, add to Book table
 		//2) Add to inventory
-
 
 		global $slimApp;
 		$conn = dbConnect();
@@ -148,24 +147,47 @@
 		$Title = $input->Title;
 		$Subtitle = $input->Subtitle;
 		$Author = $input->Author;
-
-		createSpineImage($ISBN,$Title,$Author);
-		$Image_Spine = $ISBN.".png";
-		$Image_Cover = "cover1.jpg";
 		$UserID = $_SESSION['UserID']; //this may need to be fixed (login not in place yet)
 
-		$query = $conn->prepare("INSERT INTO Book 
-									(Title, Subtitle, Author, ISBN, Image_Spine, Image_Cover)
-								VALUES 
-									(:Title ,:Subtitle ,:Author, :ISBN, :Image_Spine, :Image_Cover)");
 
-		$query->bindParam(":Title", $Title, PDO::PARAM_STR);
-		$query->bindParam(":Subtitle", $Subtitle, PDO::PARAM_STR);
-		$query->bindParam(":Author", $Author, PDO::PARAM_STR);
-		$query->bindParam(":ISBN", $ISBN, PDO::PARAM_STR);
-		$query->bindParam(":Image_Spine", $Image_Spine, PDO::PARAM_STR);
-		$query->bindParam(":Image_Cover", $Image_Cover, PDO::PARAM_STR);
-		$query->execute();
+		$checkQry = $conn->prepare("SELECT BookID FROM Book WHERE ISBN = :ISBN");
+		$checkQry->bindParam(":ISBN", $ISBN, PDO::PARAM_STR);
+		$checkQry->execute();
+		$dataObj = $checkQry->fetch(PDO::FETCH_ASSOC);
+
+		if ($dataObj == false){//Add book to database
+			createSpineImage($ISBN,$Title,$Author);
+			$Image_Spine = $ISBN.".png";
+			$Image_Cover = "cover1.jpg";
+
+			$query = $conn->prepare("INSERT INTO Book 
+										(Title, Subtitle, Author, ISBN, Image_Spine, Image_Cover)
+									VALUES 
+										(:Title ,:Subtitle ,:Author, :ISBN, :Image_Spine, :Image_Cover)");
+
+			$query->bindParam(":Title", $Title, PDO::PARAM_STR);
+			$query->bindParam(":Subtitle", $Subtitle, PDO::PARAM_STR);
+			$query->bindParam(":Author", $Author, PDO::PARAM_STR);
+			$query->bindParam(":ISBN", $ISBN, PDO::PARAM_STR);
+			$query->bindParam(":Image_Spine", $Image_Spine, PDO::PARAM_STR);
+			$query->bindParam(":Image_Cover", $Image_Cover, PDO::PARAM_STR);
+			$query->execute();
+			$BookID = $pdo->lastInsertId();
+		}else{
+			$BookID = $dataObj['BookID'];
+		}
+		//add to inventory
+		$inventoryQry = $conn->prepare("INSERT INTO Inventory 
+										(BookID, OwnerID, SpecialNotes)
+									VALUES 
+										(:BookID ,:OwnerID ,:SpecialNotes)");
+		//$BookID = 1; //test
+		$OwnerID = 1;
+		$SpecialNotes = "";
+		$inventoryQry->bindParam(":BookID", $BookID, PDO::PARAM_INT);
+		$inventoryQry->bindParam(":OwnerID", $OwnerID, PDO::PARAM_INT);
+		$inventoryQry->bindParam(":SpecialNotes", $SpecialNotes, PDO::PARAM_STR);
+		$inventoryQry->execute();
 
 
 	}
