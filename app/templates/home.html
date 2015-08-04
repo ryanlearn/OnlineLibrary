@@ -43,9 +43,10 @@
       </div><!-- /.row -->
       {{lookupBookRes.data[0].author_data[0].name}}<br/>
       {{lookupBookRes.data[0].title}}
+      {{testpass}}
       <img src="{{lookupBookRes.Items.Item.LargeImage.URL}}"><br/>
       <div class="row">
-        <button class="btn btn-default" type="button" ng-click="addBook(Author,Title,Subtitle,ISBN)">Add Book</button>
+        <button class="btn btn-default" type="button" ng-click="addBook()">Add Book</button>
       </div>
   </div>
 </div>  
