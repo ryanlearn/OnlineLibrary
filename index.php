@@ -54,6 +54,8 @@
     <!-- UI Libs -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- <script src="Scripts/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script> -->
+    <script src="Scripts/ui-bootstrap-0.13.2.min.js"></script>
+    <!--<script src="Scripts/ui-bootstrap-tpls-0.4.0"></script>-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     
 
@@ -74,7 +76,7 @@
 
 
     <!-- Directives -->
-
+    <script src="app/directives/modalDirective.js"></script>
 
 
     <!--Filters-->
