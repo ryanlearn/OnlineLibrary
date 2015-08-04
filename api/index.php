@@ -13,7 +13,6 @@
 	$slimApp->get('/getMyBooks', 'getMyBooks');
 	$slimApp->post('/lookupBook', function(){lookupBook();});
 	$slimApp->post('/addBook', function(){addBook();});
-	$slimApp->get('/testRest', 'testRest');
 
 	function CallAPI($method, $url, $data = false)
 	{
@@ -48,12 +47,6 @@
 
 	    return $result;
 	}
-
-	function testRest(){
-			$testRest = CallAPI("GET","http://isbndb.com/api/v2/json/4UYZ2W9Z/book/0399530649");
-			echo $testRest;
-	}
-
 
 	function db(){
 		$conn = dbConnect();
@@ -108,7 +101,43 @@
 		}
 	}
 
+	function createSpineImage($ISBN, $title, $author){
+
+		//work still to be done:
+		// - extract last name for author
+		// - truncate title if needed
+		// - auto adjust font size and positioning
+
+		$image = new Imagick();
+		$image->newImage(26, 300, new ImagickPixel('black'));
+		$image->setImageFormat('png');
+
+		$draw = new ImagickDraw();
+		/* Black text */
+		$draw->setFillColor('white');
+
+		/* Font properties */
+		$draw->setFont('Bookman-DemiItalic');
+		$draw->setFontSize( 6 );
+
+		/* Create text */
+		$image->annotateImage($draw, 10, 10, 90, $title);
+
+		$image->annotateImage($draw, 10, 200, 90, $author);		
+
+		header('Content-type: image/png');
+		$imagePath = '../images/'.$ISBN.'.png';
+		$image->writeImage($imagePath);
+		echo $image;
+	}
+
 	function addBook(){
+
+		//process is:
+		//1) check if book already exists in database
+		//  --> if no, add to Book table
+		//2) Add to inventory
+
 
 		global $slimApp;
 		$conn = dbConnect();
@@ -120,7 +149,8 @@
 		$Subtitle = $input->Subtitle;
 		$Author = $input->Author;
 
-		$Image_Spine = "spine1.jpg";
+		createSpineImage($ISBN,$Title,$Author);
+		$Image_Spine = $ISBN.".png";
 		$Image_Cover = "cover1.jpg";
 		$UserID = $_SESSION['UserID']; //this may need to be fixed (login not in place yet)
 
@@ -139,6 +169,9 @@
 
 
 	}
+
+
+
 
 	$slimApp->run();
 ?>
