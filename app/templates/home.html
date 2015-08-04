@@ -28,7 +28,7 @@
   <div class="text-center">
 
         <div class="row">
-          <div ng-repeat="abook in books" style=" display:inline; margin: 0px 1px;"><img ng-src="/images/{{abook.Image_Spine}}" style=" height: 300px;"></div>
+          <div ng-repeat="abook in books" style=" display:inline; margin: 0px 1px;"><img ng-src="/images/{{abook.Image_Spine}}" style=" height: 300px;" data-ng-click="showConfirm($abook)"></div>
         </div>
 
        <div class="row" style="padding-top: 5px;">
@@ -50,12 +50,6 @@
   </div>
 </div>  
 </div><!-- /.container -->
-
-<<<<<<< HEAD
-<a data-ng-click="showConfirm()">Test Modal</a>
-=======
-
->>>>>>> FETCH_HEAD
 
 </body>
 

@@ -1,7 +1,7 @@
 /** Adapt User Controller
 *@class UserController
 */
-app.controller('bookController', function ($scope, $location, $rootScope, bookService, $q, $timeout) {
+app.controller('bookController', function ($scope, $location, $rootScope, bookService, $q, $timeout, sharedService, $window) {
 	
 $scope.testpass = "asdf";
 
@@ -43,33 +43,22 @@ $scope.testpass = "asdf";
 			});
 
 		};
-<<<<<<< HEAD
-		
 
-		function ModalController($scope){
-	    $scope.title = "Angularjs Bootstrap Modal Directive Example";
-	    $scope.showModal1 = false;
-	    $scope.showModal2 = false;
 
-	    $scope.hide = function(m){
-	        if(m === 1){
-	            $scope.showModal1 = false;
-	        }else{
-	            $scope.showModal2 = false;
-	        }
-	    }
+	    $scope.showConfirm = function (abook)
+	    {
+	        sharedService.showConfirmDialog(
+	            'Book Title',
+	            abook)
+	            .then(function ()
+	            {
+	                $window.location = '#/home';
+	            },
+	            function ()
+	            {
+	            });
+	    };		
 
-	    $scope.modalOneShown = function(){
-	        console.log('model one shown');
-	    }
-
-	    $scope.modalOneHide = function(){
-	        console.log('model one hidden');
-	    }
-}
-
-=======
->>>>>>> FETCH_HEAD
 
 
 
