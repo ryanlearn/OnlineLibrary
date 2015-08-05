@@ -48,7 +48,7 @@ $scope.testpass = "asdf";
 	    $scope.showConfirm = function (abook)
 	    {
 	        sharedService.showConfirmDialog(
-	            'Book Title',
+	            abook.Title,
 	            abook)
 	            .then(function ()
 	            {

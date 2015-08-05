@@ -7,7 +7,7 @@ app.factory("sharedService",["$q", "$modal", function ($q, $modal)
         var modalInstance = $modal.open({
             animation: true,
             size: "sm",
-            templateUrl: '/app/templates/modal.html',
+            templateUrl: '/app/templates/bookDetail.html',
             controller: function ($scope, $modalInstance)
             {
                 $scope.title = title;
