@@ -1,11 +1,10 @@
 <!--<div class="modal-header">
   <h3 class="modal-title">{{title}}</h3>
 </div>-->
-<div class="modal-body">
-
-<div class="alert alert-success" role="alert">
-  <strong>Success!</strong> Ryan has been notified you would like to borrow {{message.Title}}
-</div>
+<div class="modal-body" ng-controller="bookController as book">
+<alert ng-show="showBorrowed == 1" type="success" close="closeAlert()">
+	<strong>Success!</strong> Ryan has been notified you would like to borrow {{message.Title}}
+</alert>
 
 <div class="row">
   <div class="col-md-2">

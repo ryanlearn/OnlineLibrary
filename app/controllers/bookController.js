@@ -62,8 +62,15 @@ $scope.showBorrowed = "false";
 
 	    $scope.borrowBook = function ()
 	    {
-	    	$scope.showBorrowed = "true";
+	    	//need to check email address here, call some api function, then decide what alert to show
+	        $scope.showBorrowed = 1;
+
 	    };	
+
+	    $scope.closeAlert = function ()
+	    {
+	    	$scope.showBorrowed = 0;
+	    };
 
 
 
