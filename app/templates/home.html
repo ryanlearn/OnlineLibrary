@@ -11,9 +11,9 @@
     </div>
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#home">My Books</a></li>
-        <li><a href="#page2">Friends Books</a></li>
-        <li><a href="#page3">Popular Books</a></li>
+        <!--<li class="active"><a href="#home">My Books</a></li>-->
+        <!--<li><a href="#page2">Friends Books</a></li>-->
+        <!--<li><a href="#page3">Popular Books</a></li>-->
       </ul>
     </div><!--/.nav-collapse -->
   </div>
@@ -31,22 +31,23 @@
           <div ng-repeat="abook in books" style=" display:inline; margin: 0px 1px;"><img ng-src="/images/{{abook.Image_Spine}}" style=" height: 300px;" data-ng-click="showConfirm(abook)"></div>
         </div>
 
-       <div class="row" style="padding-top: 5px;">
+
+       <!--<div class="row" style="padding-top: 5px;">
         <div class="col-lg-6">
           <div class="input-group">
             <input type="text" class="form-control" placeholder="ISBN..." ng-model="isbntest" >
             <span class="input-group-btn">
               <button class="btn btn-default" type="button" ng-click="lookupBook(isbntest)">Go!</button>
             </span>
-          </div><!-- /input-group -->
-        </div><!-- /.col-lg-6 -->
-      </div><!-- /.row -->
-      {{lookupBookRes.data[0].author_data[0].name}}<br/>
-      {{lookupBookRes.data[0].title}}<br/>
+          </div>--><!-- /input-group -->
+        <!--</div><!-- /.col-lg-6 -->
+      <!--</div><!-- /.row -->
+      <!--{{lookupBookRes.data[0].author_data[0].name}}<br/>-->
+      <!--{{lookupBookRes.data[0].title}}<br/>-->
 
-      <div class="row">
-        <button class="btn btn-default" type="button" ng-click="addBook()">Add Book</button>
-      </div>
+      <!--<div class="row">
+        <button class="btn btn-default" type="button" data-ng-click="addBook()">Add Book</button>
+      </div>-->
   </div>
 </div>  
 </div><!-- /.container -->

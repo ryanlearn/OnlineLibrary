@@ -6,13 +6,15 @@ app.factory("sharedService",["$q", "$modal", function ($q, $modal)
 
         var modalInstance = $modal.open({
             animation: true,
-            size: "sm",
+            size: "lg",
             templateUrl: '/app/templates/bookDetail.html',
             controller: function ($scope, $modalInstance)
             {
                 $scope.title = title;
                 $scope.message = message;
-
+                $scope.range = new Array(5);
+                $scope.starRating = parseInt(message.StarRating);
+                $scope.emptyStarRating = 5-parseInt(message.StarRating);
                 $scope.ok = function ()
                 {
                     modalInstance.close();
@@ -35,3 +37,4 @@ app.factory("sharedService",["$q", "$modal", function ($q, $modal)
         showConfirmDialog: _showConfirmDialog
     };
 }]);
+

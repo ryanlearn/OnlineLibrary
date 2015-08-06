@@ -1,9 +1,54 @@
-<div class="modal-header">
+<!--<div class="modal-header">
   <h3 class="modal-title">{{title}}</h3>
-</div>
+</div>-->
 <div class="modal-body">
-  {{message}}
+
+<div class="alert alert-success" role="alert">
+  <strong>Success!</strong> Ryan has been notified you would like to borrow {{message.Title}}
 </div>
+
+<div class="row">
+  <div class="col-md-2">
+  	<img data-ng-src="../images/{{message.Image_Cover}}">
+  </div>
+  <div class="col-md-3">
+	<div class="panel panel-default">
+	  <div ng-if="message.Read == '1'" class="panel-body">
+	 	<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Ryan has Read This
+	  </div>
+	  <div ng-if="message.Read == '0'" class="panel-body">
+	 	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Ryan Hasn't Read This Yet
+	  </div>	  
+	</div>
+ 	
+  </div>
+  <div class="col-md-2">
+	<div class="panel panel-default"> 
+	  <div class="panel-body">
+
+	  	<span class="glyphicon glyphicon-star" ng-repeat="i in range.slice(0,starRating) track by $index"></span><span class="glyphicon glyphicon-star-empty" ng-repeat="i in range.slice(0,emptyStarRating) track by $index2"></span>
+	  </div>
+	</div>  	
+  </div>
+  <div class="col-md-4">
+	<div class="row">
+	    <div class="input-group">
+	      <input type="text" class="form-control" placeholder="Email Address">
+	      <span class="input-group-btn">
+	        <button class="btn btn-default" type="button" ng-click="borrowBook()">Borrow Book</button>
+	      </span>
+	    </div><!-- /input-group -->     
+    </div>  
+  </div>
+  <div class="col-md-1"></div>
+</div>
+
+  Author: {{message.Author}}
+</div>
+
+
+
+
 <div class="modal-footer">
   <button type="button" class="btn btn-primary btn-warn" data-ng-click="ok(); $event.stopPropagation()">OK</button>
 

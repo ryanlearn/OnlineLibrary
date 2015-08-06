@@ -4,6 +4,7 @@
 app.controller('bookController', function ($scope, $location, $rootScope, bookService, $q, $timeout, sharedService, $window) {
 	
 $scope.testpass = "asdf";
+$scope.showBorrowed = "false";
 
 		var promise = bookService.getMyBooks();
 		promise.then(function(value){
@@ -57,7 +58,12 @@ $scope.testpass = "asdf";
 	            function ()
 	            {
 	            });
-	    };		
+	    };	
+
+	    $scope.borrowBook = function ()
+	    {
+	    	$scope.showBorrowed = "true";
+	    };	
 
 
 
