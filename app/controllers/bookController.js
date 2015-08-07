@@ -5,7 +5,7 @@ app.controller('bookController', function ($scope, $location, $rootScope, bookSe
 	
 $scope.testpass = "asdf";
 $scope.showBorrowed = "false";
-
+$scope.searchBooks   = ''; 
 		var promise = bookService.getMyBooks();
 		promise.then(function(value){
 			$scope.books = value;
