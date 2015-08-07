@@ -19,17 +19,23 @@
   </div>
 </div>
 
+
 <body>
 
+<!--<img src="images/shelf-long.jpg" style="margin-left: -50px; margin-top: 0px">-->
 <div class="jumbotron">
-<div class="container" style="padding-top: 50px;">
+<div class="container" style="padding-top: 50px; background-image: url('images/shelf.png'); background-repeat: repeat-y;">
 
 
-  <div class="text-center">
+  <div>
 
-        <div class="row">
-          <div ng-repeat="abook in books" style=" display:inline; margin: 0px 1px;"><img ng-src="/images/{{abook.Image_Spine}}" style=" height: 300px;" data-ng-click="showConfirm(abook)"></div>
+        <div class="row" style="margin-top: -10px;">
+          <div ng-repeat="abook in books" style=" display:inline; margin: 0px 3px;">
+          <img ng-src="/images/{{abook.Image_Spine}}" style=" height: 300px; margin-bottom: 75px;" data-ng-click="showConfirm(abook)">
+          </div>
         </div>
+
+        
 
 
        <!--<div class="row" style="padding-top: 5px;">
@@ -39,13 +45,13 @@
             <span class="input-group-btn">
               <button class="btn btn-default" type="button" ng-click="lookupBook(isbntest)">Go!</button>
             </span>
-          </div>--><!-- /input-group -->
+          </div><!-- /input-group -->
         <!--</div><!-- /.col-lg-6 -->
-      <!--</div><!-- /.row -->
-      <!--{{lookupBookRes.data[0].author_data[0].name}}<br/>-->
-      <!--{{lookupBookRes.data[0].title}}<br/>-->
+     <!-- </div><!-- /.row -->
+      <!--{{lookupBookRes.data[0].author_data[0].name}}<br/>
+      {{lookupBookRes.data[0].title}}<br/>
 
-      <!--<div class="row">
+      <div class="row">
         <button class="btn btn-default" type="button" data-ng-click="addBook()">Add Book</button>
       </div>-->
   </div>
