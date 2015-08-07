@@ -92,7 +92,8 @@
 										FROM Inventory
 										INNER JOIN Book
 										ON Inventory.BookID=Book.BookID
-										WHERE Inventory.OwnerID = 1");
+										WHERE Inventory.OwnerID = 1
+										ORDER BY Book.Author asc");
 			$query->execute($params);
 			$dataObj = $query->fetchAll(PDO::FETCH_ASSOC);
 			

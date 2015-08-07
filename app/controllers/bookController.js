@@ -60,16 +60,23 @@ $scope.showBorrowed = "false";
 	            });
 	    };	
 
-	    $scope.borrowBook = function ()
+	    $scope.borrowBook = function (emailBorrow)
 	    {
 	    	//need to check email address here, call some api function, then decide what alert to show
-	        $scope.showBorrowed = 1;
+	        if (emailBorrow != null){
+	        	$scope.showBorrowed = 1;
+	        	$scope.showNoEmail = 0;
+	        }
+	        else{
+	        	$scope.showNoEmail = 1;
+	        }
 
 	    };	
 
 	    $scope.closeAlert = function ()
 	    {
 	    	$scope.showBorrowed = 0;
+	    	$scope.showNoEmail = 0;
 	    };
 
 

@@ -13,7 +13,12 @@ app.factory("sharedService",["$q", "$modal", function ($q, $modal)
                 $scope.title = title;
                 $scope.message = message;
                 $scope.range = new Array(5);
+
                 $scope.starRating = parseInt(message.StarRating);
+                $scope.rated = 1;
+                if ($scope.starRating == 0){
+                    $scope.rated = 0;
+                }
                 $scope.emptyStarRating = 5-parseInt(message.StarRating);
                 $scope.ok = function ()
                 {

@@ -3,46 +3,71 @@
 </div>-->
 <div class="modal-body" ng-controller="bookController as book">
 <alert ng-show="showBorrowed == 1" type="success" close="closeAlert()">
-	<strong>Success!</strong> Ryan has been notified you would like to borrow {{message.Title}}
+	<strong>Success!</strong> Ryan would be notified you would like to borrow {{message.Title}}. This is not active in demo mode- send me a message if you want to borrow a book, or wait for the full app to be released.
+</alert>
+<alert ng-show="showNoEmail == 1" type="warning" close="closeAlert()">
+	<strong>Please enter your email address!</strong>
 </alert>
 
 <div class="row">
-  <div class="col-md-2">
+  <div class="col-md-4">
   	<img data-ng-src="../images/{{message.Image_Cover}}" style=" height: 300px;">
   </div>
-  <div class="col-md-3">
+  <div class="col-md-8">
+    <h2>Title: {{message.Title}}</h2>
+    <h4 style="margin-bottom: 40px;">Author: {{message.Author}}</h4>
+<div class="row">
+  <div class="col-md-5">
 	<div class="panel panel-default">
 	  <div ng-if="message.Read == '1'" class="panel-body">
-	 	<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Ryan has Read This
+	 	<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Ryan has read this
 	  </div>
 	  <div ng-if="message.Read == '0'" class="panel-body">
-	 	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Ryan Hasn't Read This Yet
+	 	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Ryan hasn't read this yet
 	  </div>	  
 	</div>
+</div>
+</div>
+		<div class="row">
+			<div class="col-md-5">
+				<div class="panel panel-default">
+				  <div ng-if="message.InStock == '1'" class="panel-body">
+				 	<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Available for borrow
+				  </div>
+				  <div ng-if="message.InStock == '0'" class="panel-body">
+				 	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Not Available for borrow
+				  </div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+		    <div class="input-group">
+		      <input type="text" class="form-control" placeholder="Email Address" ng-model="emailBorrow">
+		      <span class="input-group-btn">
+		        <button class="btn btn-default" type="button" ng-click="borrowBook(emailBorrow)">Borrow Book</button>
+		      </span>
+		    </div>
+	    </div><!-- /input-group -->     
+    </div> 
  	
   </div>
-  <div class="col-md-2">
-	<div class="panel panel-default"> 
-	  <div class="panel-body">
-
-	  	<span class="glyphicon glyphicon-star" ng-repeat="i in range.slice(0,starRating) track by $index"></span><span class="glyphicon glyphicon-star-empty" ng-repeat="i in range.slice(0,emptyStarRating) track by $index2"></span>
-	  </div>
-	</div>  	
-  </div>
-  <div class="col-md-4">
-	<div class="row">
-	    <div class="input-group">
-	      <input type="text" class="form-control" placeholder="Email Address">
-	      <span class="input-group-btn">
-	        <button class="btn btn-default" type="button" ng-click="borrowBook()">Borrow Book</button>
-	      </span>
-	    </div><!-- /input-group -->     
-    </div>  
-  </div>
-  <div class="col-md-1"></div>
+</div>
+<div class="row">
+	<div class="col-md-3">
+		<div class="panel panel-default" style="margin-left: 2px; margin-top: 2px; text-align: center"> 
+		  <div class="panel-body">
+		  <div ng-if="rated == 1">
+		  	Rating: <span class="glyphicon glyphicon-star" ng-repeat="i in range.slice(0,starRating) track by $index"></span><span class="glyphicon glyphicon-star-empty" ng-repeat="i in range.slice(0,emptyStarRating) track by $index2"></span>
+		  </div>
+		  <div ng-if="rated == 0">
+		  	Has not been rated.
+		  </div>
+		  </div>
+		</div> 
+	</div>
 </div>
 
-  Author: {{message.Author}}
 </div>
 
 
