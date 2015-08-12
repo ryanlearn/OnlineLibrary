@@ -34,6 +34,27 @@ app.service('adaptUserService', function ($resource,$q) {
 		return deferred.promise;
 	};
 
+	this.register = function (firstname,lastname,email,password,passwordMatch) {
+		var deferred = $q.defer();
+		var devSrv = $resource('/api/index.php/register',{},{'register': { method: 'POST', isArray: false}});
+		var res = devSrv.register({},{firstname:firstname,
+										lastname:lastname,
+										email:email,
+										password:password,
+										passwordMatch:passwordMatch}
+									,function(){
+										if (res.status == 0){
+											deferred.resolve(res);
+										}else{
+											deferred.reject(res);
+										}
+										
+									},function(){
+										deferred.reject(res);
+									});
+		return deferred.promise;
+	};
+
 	/**
 	* Returns a list of users for the my profile page
 	* @method getRelatedUsers

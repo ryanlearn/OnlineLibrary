@@ -63,7 +63,6 @@ app.service('loginService', function ($resource, $q) {
 			//process return object
 			if (res.status == 0){
 
-				//notes = res.NOTIFICATIONARRAY; // <---- still not returned from the php service yet
 				userObj = res.userObj;
 				roleObj = res.roleobj;
 				isInit = true;
@@ -73,6 +72,7 @@ app.service('loginService', function ($resource, $q) {
 				userObj = [];
 				roleObj = [];
 				navObj = [];
+				deferred.reject(res);
 			}
 			deferred.resolve(res);
 			//return res;

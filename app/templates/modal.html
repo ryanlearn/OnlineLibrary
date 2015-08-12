@@ -1,11 +1,22 @@
 <div class="modal-header">
-  <h3 class="modal-title">{{title}}</h3>
+  <h3 class="modal-title">Register</h3>
 </div>
-<div class="modal-body">
-  {{message}}
+<div class="modal-body" data-ng-controller="bookController as book">
+	<alert ng-show="showRegistrationAlert == 1" type="warning" close="closeAlert()">
+		{{registrationError}}	
+	</alert>
+      <form class="form-signin">
+      	<label for="inputFirstName" class="sr-only">First Name</label>
+        <input type="text" id="inputFirstName" class="form-control" placeholder="First Name" ng-model="firstname" required autofocus>
+        <label for="inputLastName" class="sr-only">Last Name</label>
+        <input type="text" id="inputLastName" class="form-control" placeholder="Last Name" ng-model="lastname" required autofocus>
+        <label for="inputEmail" class="sr-only">Email Address</label>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" ng-model="email" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" ng-model="password" required><label for="inputPasswordMatch" class="sr-only">Repeat Password</label>
+        <input type="password" id="inputPasswordMatch" class="form-control" placeholder="Repeat Password" ng-model="passwordMatch" required>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" data-ng-click="register(firstname,lastname,email,password,passwordMatch)">Submit</button>
+      </form>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-primary btn-warn" data-ng-click="ok(); $event.stopPropagation()">OK</button>
-
-  <!--<button type="button" class="btn btn-default" data-ng-click="cancel(); $event.stopPropagation()">Cancel</button>-->
 </div>

@@ -13,6 +13,55 @@
 	$slimApp->get('/getMyBooks', 'getMyBooks');
 	$slimApp->post('/lookupBook', function(){lookupBook();});
 	$slimApp->post('/addBook', function(){addBook();});
+	$slimApp->post('/register', function(){register();});
+
+	function register(){
+
+		global $slimApp;
+		$conn = dbConnect();
+		$request = $slimApp->request();
+		$body = $request->getBody();
+		$input = json_decode($body);
+
+		$rtnObj = new rtnObj();
+
+		$firstname = $input->firstname;
+		$lastname = $input->lastname;
+		$email = $input->email;
+		$password = $input->password;
+		$passwordMatch = $input->passwordMatch;
+
+		if ($password != $passwordMatch){
+	    		$rtnObj->setStatus(-1);
+	    		$rtnObj->setMessage('Passwords do not match');
+		}else{
+			try
+			{
+
+				$query = $conn->prepare("INSERT INTO Accounts 
+											(Username, Firstname, Lastname, Email, Password, RoleID, isActivated)
+										VALUES 
+											('nousernames' ,:firstname ,:lastname, :email, :password, 1, 1)");
+
+				$query->bindParam(":firstname", $firstname, PDO::PARAM_STR);
+				$query->bindParam(":lastname", $lastname, PDO::PARAM_STR);
+				$query->bindParam(":email", $email, PDO::PARAM_STR);
+				$query->bindParam(":password", $password, PDO::PARAM_STR);
+				$query->execute();
+
+		        $_SESSION['UserID'] = $conn->lastInsertId();;
+		        $_SESSION['isLoggedIn'] = true;
+
+				$rtnObj->setStatus(0);
+	    		$rtnObj->setMessage('Success');
+			}
+			catch(Exception $e)
+			{
+			  echo $e->getMessage();
+			}
+		}
+		echo json_encode($rtnObj);
+	}
 
 	function CallAPI($method, $url, $data = false)
 	{
@@ -87,12 +136,12 @@
 	function getMyBooks(){
 		if (loggedIn()){
 			$conn = dbConnect();
-			$params = array(); //$_SESSION['UserID']
+			$params = array($_SESSION['UserID']);
 			$query = $conn->prepare("SELECT Book.*
 										FROM Inventory
 										INNER JOIN Book
 										ON Inventory.BookID=Book.BookID
-										WHERE Inventory.OwnerID = 1
+										WHERE Inventory.OwnerID = ?
 										ORDER BY Book.Author asc");
 			$query->execute($params);
 			$dataObj = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -173,7 +222,7 @@
 			$query->bindParam(":Image_Spine", $Image_Spine, PDO::PARAM_STR);
 			$query->bindParam(":Image_Cover", $Image_Cover, PDO::PARAM_STR);
 			$query->execute();
-			$BookID = $pdo->lastInsertId();
+			$BookID = $conn->lastInsertId();
 		}else{
 			$BookID = $dataObj['BookID'];
 		}

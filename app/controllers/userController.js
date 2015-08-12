@@ -1,8 +1,16 @@
 /** Adapt User Controller
 *@class UserController
 */
-app.controller('UserController', function ($scope, $location, $rootScope, loginService, $q, $timeout) {
+app.controller('UserController', function ($scope, $location, $rootScope, adaptUserService, loginService, $q, $timeout, sharedService, $window) {
 	
+
+	$scope.showLoginMessage = 0;
+
+    $scope.closeAlert = function ()
+    {
+    	$scope.showLoginMessage = 0;
+    };
+
 	var doLogin = function(value) {
 		console.log('doLogin()');
 
@@ -12,6 +20,22 @@ app.controller('UserController', function ($scope, $location, $rootScope, loginS
 		$scope.welcome = value.userObj.firstName + " " + value.userObj.lastName;
 		//$location.url('/');
 	};
+
+    $scope.showRegister = function ()
+    {
+        sharedService.showRegisterDialog(
+            "test",
+            "test2")
+            .then(function ()
+            {
+                $window.location = '#/';
+            },
+            function ()
+            {
+            });
+    };	
+
+
 
 
     init();
@@ -76,7 +100,8 @@ app.controller('UserController', function ($scope, $location, $rootScope, loginS
 
 			}
 		}, function(reason) {
-			$scope.promise = reason;
+			$scope.showLoginMessage = 1;
+			$scope.loginMessage = reason.message;
 		});
 
 	};
@@ -110,44 +135,5 @@ app.controller('UserController', function ($scope, $location, $rootScope, loginS
 		}
     };*/
 
-
-    var getNav = function() {
-		console.log('getNav()');
-		
-		//$scope.navItems = loginService.getNav();
-		if ($scope.userObj.roleId == 1 && $scope.userObj.languagePreference == 0){
-			$scope.navItems = [
-				{ title: 'Home', path: '/home/' },
-				{ title: 'About', path: '/about/' },
-				{ title: 'Forecast', path: '/forecast/' },
-				{ title: 'Transactions', path: '/transactions/' },
-				{ title: 'Contacts', path: '/contact/' },
-				{ title: 'Resources', path: '/resources/' }
-			];
-		}else if ($scope.userObj.roleId == 1 && $scope.userObj.languagePreference == 1){
-			$scope.navItems = [
-				{ title: 'French', path: '/home/' },
-				{ title: 'French', path: '/about/' },
-				{ title: 'French', path: '/forecast/' },
-				{ title: 'French', path: '/transactions/' },
-				{ title: 'French', path: '/contact/' },
-				{ title: 'French', path: '/resources/' }
-			];
-		}else if($scope.userObj.roleId == 2){
-			$scope.navItems = [
-				{ title: 'Home', path: '/admin-home/' },
-				{ title: 'Reports', path: '/admin-reports/' },
-				{ title: 'Resources', path: '/resources/' },
-				{ title: 'Contacts', path: '/contact/' },
-				{ title: 'About', path: '/about/' },
-			];
-		}else if($scope.userObj.roleId == 3){
-			$scope.navItems = [
-				{ title: 'Home', path: '/rep-home/' },
-				{ title: 'Reports', path: '/rep-reports/' },
-				{ title: 'Resources', path: '/rep-resources/' }
-			];
-		}
-    };
 
 });

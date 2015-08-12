@@ -1,11 +1,12 @@
 /** Adapt User Controller
 *@class UserController
 */
-app.controller('bookController', function ($scope, $location, $rootScope, bookService, $q, $timeout, sharedService, $window) {
+app.controller('bookController', function ($scope, $location, $rootScope, adaptUserService, bookService, $q, $timeout, sharedService, $window) {
 	
 $scope.testpass = "asdf";
 $scope.showBorrowed = "false";
 $scope.searchBooks   = ''; 
+$scope.showRegistrationAlert = 0;
 		var promise = bookService.getMyBooks();
 		promise.then(function(value){
 			$scope.books = value;
@@ -14,6 +15,22 @@ $scope.searchBooks   = '';
 			$scope.books = reason;
 		});
 
+
+
+    $scope.register = function (firstname,lastname,email,password,passwordMatch)
+    {
+    	console.log("register pressed");
+		var promise = adaptUserService.register(firstname,lastname,email,password,passwordMatch);
+		//var initRes = loginService.sessionInit();
+		promise.then(function(value){
+			$scope.cancel();
+			$location.url('/home');
+		}, function(reason) {
+			$scope.registrationError = reason.message;
+			$scope.showRegistrationAlert = 1;
+		});
+
+    };
 	
 		$scope.lookupBook = function(ISBN){
 			var promise = bookService.lookupBook(ISBN);
@@ -77,6 +94,7 @@ $scope.searchBooks   = '';
 	    {
 	    	$scope.showBorrowed = 0;
 	    	$scope.showNoEmail = 0;
+	    	$scope.showRegistrationAlert = 0;
 	    };
 
 

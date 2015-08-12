@@ -105,6 +105,10 @@
 	    			$rtnObj->sessionUserID = $_SESSION['UserID'];
 	    			echo json_encode($rtnObj);
 	    		}//successful login
+	    	}else{
+	    		$rtnObj->setStatus(-1);
+	    		$rtnObj->setMessage('Username or password is incorrect');
+	    		echo json_encode($rtnObj);
 	    	}
 
     	}
