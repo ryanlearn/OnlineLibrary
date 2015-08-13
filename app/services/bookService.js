@@ -57,11 +57,12 @@ app.service('bookService', function ($resource, $q) {
 		var res = devSrv.lookupBook({},{
 			ISBN: ISBN
 		},function(){
-			if (res.status == 0) {
-				deferred.resolve(res);
-			} else {
+			if ("error" in res){
 				deferred.reject(res);
+			}else{
+				deferred.resolve(res);
 			}
+			
 		},function(){
 			deferred.reject(res);
 		});

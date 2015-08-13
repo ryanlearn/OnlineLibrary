@@ -33,27 +33,10 @@
 
         <div class="row" style="margin-top: -10px;">
           <div ng-repeat="abook in books | filter:searchBooks" style=" display:inline; margin: 0px 0px;"><img ng-src="/images/{{abook.Image_Spine}}" style=" height: 300px; margin-bottom: 75px;" data-ng-click="showConfirm(abook)"></div>
+            <button class="btn btn-default btn-lg" type="button" data-ng-click="showAddBook()"><h3>Add Book</h3></button>
+          
         </div>
 
-        
-
-
-       <!--<div class="row" style="padding-top: 5px;">
-        <div class="col-lg-6">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="ISBN..." ng-model="isbntest" >
-            <span class="input-group-btn">
-              <button class="btn btn-default" type="button" ng-click="lookupBook(isbntest)">Go!</button>
-            </span>
-          </div><!-- /input-group -->
-        <!--</div><!-- /.col-lg-6 -->
-     <!-- </div><!-- /.row -->
-      <!--{{lookupBookRes.data[0].author_data[0].name}}<br/>
-      {{lookupBookRes.data[0].title}}<br/>
-
-      <div class="row">
-        <button class="btn btn-default" type="button" data-ng-click="addBook()">Add Book</button>
-      </div>-->
   </div>
 </div>  
 </div><!-- /.container -->

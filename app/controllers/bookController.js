@@ -7,6 +7,8 @@ $scope.testpass = "asdf";
 $scope.showBorrowed = "false";
 $scope.searchBooks   = ''; 
 $scope.showRegistrationAlert = 0;
+$scope.showBookSearchError = 0;
+
 		var promise = bookService.getMyBooks();
 		promise.then(function(value){
 			$scope.books = value;
@@ -36,23 +38,21 @@ $scope.showRegistrationAlert = 0;
 			var promise = bookService.lookupBook(ISBN);
 			promise.then(function(value){
 				$scope.lookupBookRes = value;
-				//$scope.author = lookupBookRes.data[0].author_data[0].name;
-				//$scope.ISBN = lookupBookRes.data[0].isbn13;
-				//$scope.bookTitle = lookupBookRes.data[0].title;
+				$scope.author = value.data[0].author_data[0].name;
+				$scope.ISBN = value.data[0].isbn13;
+				$scope.bookTitle = value.data[0].title;
 
 			}, function(reason) {
-				$scope.lookupBookRes = reason;
+				$scope.lookupBookRes = reason.error;
+				$scope.showBookSearchError = 1;
 			});
 
 		};
 
 
-		$scope.addBook = function(){
-			$scope.testpass = $scope.bookTitle;
-			var promise = bookService.addBook($scope.lookupBookRes.data[0].isbn13,
-												$scope.lookupBookRes.data[0].title,
-												"No Subtitle",
-												$scope.lookupBookRes.data[0].author_data[0].name);
+		$scope.addBook = function(bookTitle, author, isbn){
+
+			var promise = bookService.addBook(isbn, bookTitle, "No Subtitle", author);
 			promise.then(function(value){
 				$scope.addBookRes = value;
 
@@ -68,6 +68,20 @@ $scope.showRegistrationAlert = 0;
 	        sharedService.showConfirmDialog(
 	            abook.Title,
 	            abook)
+	            .then(function ()
+	            {
+	                $window.location = '#/home';
+	            },
+	            function ()
+	            {
+	            });
+	    };	
+
+	    $scope.showAddBook = function ()
+	    {
+	        sharedService.showAddBookDialog(
+	            "",
+	            "")
 	            .then(function ()
 	            {
 	                $window.location = '#/home';
@@ -95,6 +109,7 @@ $scope.showRegistrationAlert = 0;
 	    	$scope.showBorrowed = 0;
 	    	$scope.showNoEmail = 0;
 	    	$scope.showRegistrationAlert = 0;
+	    	$scope.showBookSearchError = 0;
 	    };
 
 

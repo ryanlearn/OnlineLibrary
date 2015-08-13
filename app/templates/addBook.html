@@ -1,0 +1,30 @@
+<link href="../Content/signin.css" rel="stylesheet">
+<div ng-controller="bookController as book">
+<div class="modal-header">
+  <h3 class="modal-title">Add a Book to Your Library</h3>
+</div>
+<div class="modal-body" data-ng-controller="bookController as book">
+	<alert ng-show="showBookSearchError == 1" type="warning" close="closeAlert()">
+		We can't find this book. Please add book manually.
+	</alert>
+
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Find by ISBN..." ng-model="isbntest" >
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button" ng-click="lookupBook(isbntest)">Go!</button>
+            </span>
+          </div><!-- /input-group -->
+<hr>
+      <form class="form-signin">
+      	<label for="bookTitle" class="sr-only">Title</label>
+        <input type="text" id="bookTitle" class="form-control" placeholder="Title" ng-model="bookTitle" required autofocus>
+        <label for="author" class="sr-only">Author</label>
+        <input type="text" id="author" class="form-control" placeholder="Auther" ng-model="author" required autofocus>
+        <label for="isbn" class="sr-only">ISBN</label>
+        <input type="text" id="isbn" class="form-control" placeholder="ISBN" ng-model="ISBN" required autofocus>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" data-ng-click="addBook(bookTitle,author,ISBN)">Add Book</button>
+      </form>
+</div>
+<div class="modal-footer">
+</div>
+</div>

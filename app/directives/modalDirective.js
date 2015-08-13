@@ -47,16 +47,34 @@ app.factory("sharedService",["$q", "$modal", function ($q, $modal)
             templateUrl: '/app/templates/modal.html',
             controller: function ($scope, $modalInstance)
             {
-                $scope.title = title;
-                $scope.message = message;
-                $scope.range = new Array(5);
+                $scope.ok = function ()
+                {
+                    modalInstance.close();
+                    defer.resolve();
+                };
 
-                $scope.starRating = parseInt(message.StarRating);
-                $scope.rated = 1;
-                if ($scope.starRating == 0){
-                    $scope.rated = 0;
-                }
-                $scope.emptyStarRating = 5-parseInt(message.StarRating);
+                $scope.cancel = function ()
+                {
+                    $modalInstance.dismiss();
+                    defer.reject();
+                };
+            }
+        });
+
+        return defer.promise;
+    }
+
+    var _showAddBookDialog = function (title, message)
+    {
+        var defer = $q.defer();
+
+        var modalInstance = $modal.open({
+            animation: true,
+            size: "sm",
+            templateUrl: '/app/templates/addBook.html',
+            controller: function ($scope, $modalInstance)
+            {
+
                 $scope.ok = function ()
                 {
                     modalInstance.close();
@@ -77,7 +95,8 @@ app.factory("sharedService",["$q", "$modal", function ($q, $modal)
     return {
 
         showConfirmDialog: _showConfirmDialog,
-        showRegisterDialog: _showRegisterDialog
+        showRegisterDialog: _showRegisterDialog,
+        showAddBookDialog: _showAddBookDialog
     };
 }]);
 

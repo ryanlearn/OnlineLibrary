@@ -199,6 +199,7 @@
 		$Author = $input->Author;
 		$UserID = $_SESSION['UserID']; //this may need to be fixed (login not in place yet)
 
+		$rtnObj = new rtnObj();
 
 		$checkQry = $conn->prepare("SELECT BookID FROM Book WHERE ISBN = :ISBN");
 		$checkQry->bindParam(":ISBN", $ISBN, PDO::PARAM_STR);
@@ -223,8 +224,12 @@
 			$query->bindParam(":Image_Cover", $Image_Cover, PDO::PARAM_STR);
 			$query->execute();
 			$BookID = $conn->lastInsertId();
+			$rtnObj->setSuccessStatus($BookID);
+			
+	    	$rtnObj->setMessage('Added to database.');
 		}else{
 			$BookID = $dataObj['BookID'];
+			$rtnObj->setMessage('Book already existed in database. Added to inventory');
 		}
 		//add to inventory
 		$inventoryQry = $conn->prepare("INSERT INTO Inventory 
@@ -232,12 +237,15 @@
 									VALUES 
 										(:BookID ,:OwnerID ,:SpecialNotes)");
 		//$BookID = 1; //test
-		$OwnerID = 1;
+		$OwnerID = $_SESSION['UserID'];
 		$SpecialNotes = "";
 		$inventoryQry->bindParam(":BookID", $BookID, PDO::PARAM_INT);
 		$inventoryQry->bindParam(":OwnerID", $OwnerID, PDO::PARAM_INT);
 		$inventoryQry->bindParam(":SpecialNotes", $SpecialNotes, PDO::PARAM_STR);
 		$inventoryQry->execute();
+
+		$rtnObj->setStatus(0);
+		echo json_encode($rtnObj);
 
 
 	}
