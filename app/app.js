@@ -10,6 +10,10 @@ app.config(function ($routeProvider) {
     {
       templateUrl: '/app/templates/home.html'
     })
+    .when('/popular',
+    {
+      templateUrl: '/app/templates/popular.html'
+    })
   .otherwise(
     {
       redirectTo: '/app/templates/login.html'

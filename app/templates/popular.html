@@ -10,9 +10,9 @@
     </div>
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#home">My Books</a></li>
+        <li><a href="#home">My Books</a></li>
         <li><a href="#page2">Friends Books</a></li>
-        <li><a href="#popular">Popular Books</a></li>
+        <li class="active"><a href="#popular">Popular Books</a></li>
       </ul>
        <div class="input-group" style="float: right; margin-top: 8px;">
           <input type="text" class="form-control" placeholder="Filter Books..." ng-model="searchBooks">
@@ -32,9 +32,7 @@
   <div>
 
         <div class="row" style="margin-top: -10px;">
-          <div ng-repeat="abook in books | filter:searchBooks" style=" display:inline; margin: 0px 0px;"><img ng-src="/images/{{abook.Image_Spine}}" style=" height: 300px; margin-bottom: 75px;" data-ng-click="showConfirm(abook)"></div>
-            <button class="btn btn-default btn-lg" type="button" data-ng-click="showAddBook()"><h3>Add Book</h3></button>
-          
+          <div ng-repeat="abook in popularBooks | filter:searchBooks" style=" display:inline; margin: 0px 0px;"><img ng-src="/images/{{abook.Image_Spine}}" style=" height: 300px; margin-bottom: 75px;" data-ng-click="showConfirm(abook)"></div>
         </div>
 
   </div>

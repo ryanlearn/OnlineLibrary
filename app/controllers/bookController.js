@@ -17,6 +17,30 @@ $scope.showBookSearchError = 0;
 			$scope.books = reason;
 		});
 
+	$scope.getMyBooks = function ()
+	{
+		var promise = bookService.getMyBooks();
+		promise.then(function(value){
+			$scope.books = value;
+
+		}, function(reason) {
+			$scope.books = reason;
+		});
+	};
+
+
+	$scope.getPopularBooks = function ()
+	{
+		var promise = bookService.getPopularBooks();
+		promise.then(function(value){
+			$scope.popularBooks = value;
+
+		}, function(reason) {
+			$scope.popularBooks = reason;
+		});
+	};
+
+$scope.getPopularBooks();
 
 
     $scope.register = function (firstname,lastname,email,password,passwordMatch)
@@ -55,6 +79,8 @@ $scope.showBookSearchError = 0;
 			var promise = bookService.addBook(isbn, bookTitle, "No Subtitle", author);
 			promise.then(function(value){
 				$scope.addBookRes = value;
+				$scope.cancel();
+				$scope.getMyBooks();
 
 			}, function(reason) {
 				$scope.addBookRes = reason;

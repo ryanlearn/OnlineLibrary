@@ -11,6 +11,7 @@
 	//for an Angular service to call this function create $resource for path /api/adaptSeed.php/example_path
 	$slimApp->get('/db', 'db');
 	$slimApp->get('/getMyBooks', 'getMyBooks');
+	$slimApp->get('/getPopularBooks', 'getPopularBooks');
 	$slimApp->post('/lookupBook', function(){lookupBook();});
 	$slimApp->post('/addBook', function(){addBook();});
 	$slimApp->post('/register', function(){register();});
@@ -150,6 +151,28 @@
 
 		}
 	}
+
+	function getPopularBooks(){
+		if (loggedIn()){
+			$conn = dbConnect();
+
+			$query = $conn->prepare("SELECT Book.*, pop.Num FROM
+										(SELECT Book.BookID, count(Title) as Num
+										FROM Inventory
+										INNER JOIN Book
+										ON Inventory.BookID=Book.BookID
+										GROUP BY BookID
+										ORDER BY count(Title) desc
+										LIMIT 100) as pop
+										INNER JOIN Book
+										ON pop.BookID = Book.BookID");
+			$query->execute($params);
+			$dataObj = $query->fetchAll(PDO::FETCH_ASSOC);
+			
+			echo json_encode($dataObj);
+
+		}
+	}	
 
 	function createSpineImage($ISBN, $title, $author){
 
