@@ -46,6 +46,30 @@ app.service('bookService', function ($resource, $q) {
 		return deferred.promise;
 	};
 
+	this.findFriends = function(){
+		var deferred = $q.defer();
+		var devSrv = $resource('/api/index.php/findFriends',{},{'findFriends': { method: 'GET', isArray: true}});
+		var res = devSrv.findFriends({},function(){deferred.resolve(res);});
+		return deferred.promise;
+	};
+
+	this.addFriend = function(UserID){
+		var deferred = $q.defer();
+		var devSrv = $resource('/api/index.php/addFriend/',{},{'addFriend': { method: 'POST', isArray: false}});
+		var res = devSrv.addFriend({},{
+			UserID: UserID
+		},function(){
+			if (res.status == 0) {
+				deferred.resolve(res);
+			} else {
+				deferred.reject(res);
+			}
+		},function(){
+			deferred.reject(res);
+		});
+		return deferred.promise;
+	};
+
 	/**
 	* Returns a list of books for a given user
 	* @method getMyBooks

@@ -14,6 +14,10 @@ app.config(function ($routeProvider) {
     {
       templateUrl: '/app/templates/popular.html'
     })
+    .when('/findFriends',
+    {
+      templateUrl: '/app/templates/findFriends.html'
+    })
   .otherwise(
     {
       redirectTo: '/app/templates/login.html'

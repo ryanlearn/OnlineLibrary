@@ -67,6 +67,7 @@
     <script src="app/controllers/userController.js"></script>
     <script src="app/controllers/registerFormController.js"></script>
     <script src="app/controllers/bookController.js"></script>
+    <script src="app/controllers/friendsController.js"></script>
 
 
     <!--Services-->

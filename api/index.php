@@ -12,9 +12,66 @@
 	$slimApp->get('/db', 'db');
 	$slimApp->get('/getMyBooks', 'getMyBooks');
 	$slimApp->get('/getPopularBooks', 'getPopularBooks');
+	$slimApp->get('/findFriends', 'findFriends');
+	$slimApp->get('/u/:user', function($user){getUserBooks($user);});
 	$slimApp->post('/lookupBook', function(){lookupBook();});
 	$slimApp->post('/addBook', function(){addBook();});
 	$slimApp->post('/register', function(){register();});
+	$slimApp->post('/addFriend', function(){addFriend();});
+
+	function getUserBooks(){
+
+		echo json_encode($user);
+
+	}
+
+	function findFriends(){
+		if (loggedIn()){
+			$conn = dbConnect();
+			$params = array($_SESSION['UserID']);
+			$query = $conn->prepare("SELECT FirstName, LastName, UserID FROM Accounts WHERE UserID != ?");
+			$query->execute($params);
+			$dataObj = $query->fetchAll(PDO::FETCH_ASSOC);
+			
+			echo json_encode($dataObj);
+
+		}		
+	}
+
+	function addFriend(){
+		$rtnObj = new rtnObj();
+		try{
+			if (loggedIn()){
+				global $slimApp;
+				$conn = dbConnect();
+				$request = $slimApp->request();
+				$body = $request->getBody();
+				$input = json_decode($body);
+
+				$FriendUserID = $input->UserID;
+				$UserID = $_SESSION['UserID'];
+
+				$query = $conn->prepare("INSERT INTO Friend 
+											(UserID, FriendUserID)
+										VALUES 
+											(:userID ,:friendUserID)");
+
+				$query->bindParam(":friendUserID", $UserID, PDO::PARAM_STR);
+				$query->bindParam(":userID", $FriendUserID, PDO::PARAM_STR);
+				$query->execute();
+
+				$rtnObj->setStatus(0);
+		    	$rtnObj->setMessage('Success');
+				echo json_encode($rtnObj);
+
+			}	
+		}
+		catch(Exception $e)
+		{
+		  echo $e->getMessage();
+		}
+	
+	}	
 
 	function register(){
 
