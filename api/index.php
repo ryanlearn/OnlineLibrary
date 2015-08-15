@@ -277,8 +277,8 @@
 		if (loggedIn()){
 			$conn = dbConnect();
 
-			$query = $conn->prepare("SELECT Book.*, pop.Num, Inventory.StarRating, Inventory.Read, Inventory.InStock FROM
-										(SELECT Book.BookID, count(Title) as Num
+			$query = $conn->prepare("SELECT Book.*, pop.Num, pop.StarRating, pop.Read, pop.InStock FROM
+										(SELECT Book.BookID, count(Title) as Num,Inventory.StarRating, Inventory.Read, Inventory.InStock
 										FROM Inventory
 										INNER JOIN Book
 										ON Inventory.BookID=Book.BookID
