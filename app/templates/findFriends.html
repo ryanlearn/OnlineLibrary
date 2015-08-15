@@ -26,6 +26,17 @@
       <div class="container">
         <div>
           <div class="row" style="margin-top: 80px;">
+          Your Friends:
+            <div ng-repeat="friend in friends track by $index">
+              <div class="col-md-1 well">
+              <a ng-href="#/u/{{friend.UserID}}">
+                {{friend.FirstName}} {{friend.LastName}}
+              </a>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 10px;">
+            Suggested Friends:
             <div ng-repeat="friend in findFriends track by $index">
               <div class="col-md-1 well" >
               <a ng-href="#/u/{{friend.UserID}}">

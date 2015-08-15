@@ -9,10 +9,12 @@ app.controller('friendsController', function ($scope, bookService, $q, sharedSer
 	{
 		var promise = bookService.findFriends();
 		promise.then(function(value){
-			$scope.findFriends = value;
+			$scope.findFriends = value.nonFriends;
+			$scope.friends = value.friends;
 
 		}, function(reason) {
 			$scope.findFriends = reason;
+			$scope.friends = reason;
 		});
 	};
 
@@ -35,7 +37,11 @@ app.controller('friendsController', function ($scope, bookService, $q, sharedSer
 	$scope.removeFromList = function (index)
 	{
 		//remove index from $scope.findFriends
-		$scope.findFriends.splice(index,1);
+		var friend = $scope.findFriends.splice(index,1);
+
+		//add to friends array
+		console.dir(friend);
+		$scope.friends.push(friend[0]);
 	}
 
 	$scope.findFriends();

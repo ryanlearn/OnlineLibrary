@@ -48,8 +48,16 @@ app.service('bookService', function ($resource, $q) {
 
 	this.findFriends = function(){
 		var deferred = $q.defer();
-		var devSrv = $resource('/api/index.php/findFriends',{},{'findFriends': { method: 'GET', isArray: true}});
-		var res = devSrv.findFriends({},function(){deferred.resolve(res);});
+		var devSrv = $resource('/api/index.php/findFriends',{},{'findFriends': { method: 'GET', isArray: false}});
+		var res = devSrv.findFriends({},function(){
+			if (res.status == 0) {
+				deferred.resolve(res);
+			} else {
+				deferred.reject(res);
+			}
+		},function(){
+			deferred.reject(res);
+		});
 		return deferred.promise;
 	};
 

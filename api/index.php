@@ -63,16 +63,43 @@
 	}
 
 	function findFriends(){
-		if (loggedIn()){
-			$conn = dbConnect();
-			$params = array($_SESSION['UserID']);
-			$query = $conn->prepare("SELECT FirstName, LastName, UserID FROM Accounts WHERE UserID != ?");
-			$query->execute($params);
-			$dataObj = $query->fetchAll(PDO::FETCH_ASSOC);
-			
-			echo json_encode($dataObj);
+		$rtnObj = new rtnObj();
+		try{
+			if (loggedIn()){
+				$conn = dbConnect();
 
-		}		
+				//find all friends
+				$params = array($_SESSION['UserID']);
+				$query = $conn->prepare("SELECT Accounts.UserID, Accounts.FirstName, Accounts.LastName
+											FROM Friend 
+											INNER JOIN Accounts ON Accounts.UserID = Friend.FriendUserID
+											WHERE Accounts.UserID = ?");
+				$query->execute($params);
+				$dataObj = $query->fetchAll(PDO::FETCH_ASSOC);
+
+				$rtnObj->friends = $dataObj;
+
+				//find all non-friends
+				$params = array($_SESSION['UserID']);
+				$query = $conn->prepare("SELECT Accounts.UserID, Accounts.FirstName, Accounts.LastName FROM Accounts WHERE UserID not in
+											(SELECT Accounts.UserID
+											FROM Friend 
+											INNER JOIN Accounts ON Accounts.UserID = Friend.FriendUserID
+											WHERE Accounts.UserID = ?)");
+				$query->execute($params);
+				$dataObj = $query->fetchAll(PDO::FETCH_ASSOC);
+				
+				$rtnObj->nonFriends = $dataObj;
+
+				$rtnObj->setStatus(0);
+	    		$rtnObj->setMessage('Success');
+
+			}
+		}catch(Exception $e)
+		{
+		  echo $e->getMessage();
+		}	
+		echo json_encode($rtnObj);	
 	}
 
 	function addFriend(){
