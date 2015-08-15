@@ -72,8 +72,8 @@
 				$params = array($_SESSION['UserID']);
 				$query = $conn->prepare("SELECT Accounts.UserID, Accounts.FirstName, Accounts.LastName
 											FROM Friend 
-											INNER JOIN Accounts ON Accounts.UserID = Friend.FriendUserID
-											WHERE Accounts.UserID = ?");
+											INNER JOIN Accounts ON Friend.FriendUserID = Accounts.UserID
+											WHERE Friend.UserID = ?");
 				$query->execute($params);
 				$dataObj = $query->fetchAll(PDO::FETCH_ASSOC);
 
@@ -84,8 +84,8 @@
 				$query = $conn->prepare("SELECT Accounts.UserID, Accounts.FirstName, Accounts.LastName FROM Accounts WHERE UserID not in
 											(SELECT Accounts.UserID
 											FROM Friend 
-											INNER JOIN Accounts ON Accounts.UserID = Friend.FriendUserID
-											WHERE Accounts.UserID = ?)");
+											INNER JOIN Accounts ON Accounts.UserID = Friend.FriendUserID)
+											AND Accounts.UserID != ?");
 				$query->execute($params);
 				$dataObj = $query->fetchAll(PDO::FETCH_ASSOC);
 				
@@ -120,8 +120,8 @@
 										VALUES 
 											(:userID ,:friendUserID)");
 
-				$query->bindParam(":friendUserID", $UserID, PDO::PARAM_STR);
-				$query->bindParam(":userID", $FriendUserID, PDO::PARAM_STR);
+				$query->bindParam(":friendUserID", $FriendUserID, PDO::PARAM_STR);
+				$query->bindParam(":userID", $UserID, PDO::PARAM_STR);
 				$query->execute();
 
 				$rtnObj->setStatus(0);
