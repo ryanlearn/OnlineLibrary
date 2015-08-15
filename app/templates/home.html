@@ -10,9 +10,9 @@
     </div>
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#home">My Books</a></li>
+        <li class="active"><a href="#home">Books</a></li>
         <!--<li><a href="#page2">Friends Books</a></li>-->
-        <li><a href="#findFriends">Find Friends</a></li>
+        <li><a href="#friends">Friends</a></li>
         <li><a href="#popular">Popular Books</a></li>
       </ul>
        <div class="input-group" style="float: right; margin-top: 8px;">
@@ -27,6 +27,7 @@
 
 <!--<img src="images/shelf-long.jpg" style="margin-left: -50px; margin-top: 0px">-->
 <div class="jumbotron">
+<h3 style="padding-top: 0px">{{name}}</h3>
 <div class="container" style="padding-top: 50px; background-image: url('images/shelf.png'); background-repeat: repeat-y;">
 
 
@@ -34,7 +35,7 @@
 
         <div class="row" style="margin-top: -10px;">
           <div ng-repeat="abook in books | filter:searchBooks" style=" display:inline; margin: 0px 0px;"><img ng-src="/images/{{abook.Image_Spine}}" style=" height: 300px; margin-bottom: 75px;" data-ng-click="showConfirm(abook)"></div>
-            <button class="btn btn-default btn-lg" type="button" data-ng-click="showAddBook()"><h3>Add Book</h3></button>
+            <button class="btn btn-default btn-lg" type="button" data-ng-if="myBooks == 1" data-ng-click="showAddBook()"><h3>Add Book</h3></button>
           
         </div>
 

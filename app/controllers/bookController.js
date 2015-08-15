@@ -1,21 +1,38 @@
 /** Adapt User Controller
 *@class UserController
 */
-app.controller('bookController', function ($scope, $location, $rootScope, adaptUserService, bookService, $q, $timeout, sharedService, $window) {
+app.controller('bookController', function ($scope, $location, $rootScope, adaptUserService, bookService, $q, $timeout, sharedService, $window, $routeParams) {
 	
 $scope.testpass = "asdf";
 $scope.showBorrowed = "false";
 $scope.searchBooks   = ''; 
 $scope.showRegistrationAlert = 0;
 $scope.showBookSearchError = 0;
+$scope.myBooks = 0;
 
-		var promise = bookService.getMyBooks();
-		promise.then(function(value){
-			$scope.books = value;
+if ($routeParams.UserID){
+	$scope.name = "Someone Else's";	
+	var promise = bookService.friendBooks($routeParams.UserID);
+	promise.then(function(value){
+		$scope.books = value.data;
+		$scope.name = "Library of "+value.name;
 
-		}, function(reason) {
-			$scope.books = reason;
-		});
+	}, function(reason) {
+		$scope.books = reason;
+	});	
+}else{
+	$scope.myBooks = 1;
+	$scope.name = "My Library";
+	var promise = bookService.getMyBooks();
+	promise.then(function(value){
+		$scope.books = value;
+
+	}, function(reason) {
+		$scope.books = reason;
+	});	
+}
+
+
 
 	$scope.getMyBooks = function ()
 	{

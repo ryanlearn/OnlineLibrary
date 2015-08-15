@@ -84,6 +84,29 @@ app.service('bookService', function ($resource, $q) {
 
 	/**
 	* Returns a list of books for a given user
+	* @method friendBooks
+	* @return {Promise} resolves [{Book}]
+	*/
+	this.friendBooks = function (UserID) {
+		var deferred = $q.defer();
+		var devSrv = $resource('/api/index.php/friendBooks/',{},{'friendBooks': { method: 'POST', isArray: false}});
+		var res = devSrv.friendBooks({},{
+			UserID: UserID
+		},function(){
+			if (res.status != 0){
+				deferred.reject(res);
+			}else{
+				deferred.resolve(res);
+			}
+			
+		},function(){
+			deferred.reject(res);
+		});
+		return deferred.promise;
+	};
+
+	/**
+	* Returns a list of books for a given user
 	* @method lookupBook
 	* @return {Promise} resolves [{Book}]
 	*/

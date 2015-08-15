@@ -13,15 +13,52 @@
 	$slimApp->get('/getMyBooks', 'getMyBooks');
 	$slimApp->get('/getPopularBooks', 'getPopularBooks');
 	$slimApp->get('/findFriends', 'findFriends');
-	$slimApp->get('/u/:user', function($user){getUserBooks($user);});
+	$slimApp->post('/friendBooks', function(){getUserBooks();});
 	$slimApp->post('/lookupBook', function(){lookupBook();});
 	$slimApp->post('/addBook', function(){addBook();});
 	$slimApp->post('/register', function(){register();});
 	$slimApp->post('/addFriend', function(){addFriend();});
 
 	function getUserBooks(){
+		$rtnObj = new rtnObj();
+		try
+		{
+			if (loggedIn()){
+				global $slimApp;
+				$conn = dbConnect();
+				$request = $slimApp->request();
+				$body = $request->getBody();
+				$input = json_decode($body);
 
-		echo json_encode($user);
+				$params = array($input->UserID);
+				$query = $conn->prepare("SELECT Book.*
+											FROM Inventory
+											INNER JOIN Book
+											ON Inventory.BookID=Book.BookID
+											WHERE Inventory.OwnerID = ?
+											ORDER BY Book.Author asc");
+				$query->execute($params);
+				$dataObj = $query->fetchAll(PDO::FETCH_ASSOC);
+				
+				$params = array($input->UserID);
+				$query = $conn->prepare("SELECT FirstName,LastName FROM Accounts WHERE UserID = ?");
+				$query->execute($params);
+				$nameObj = $query->fetch(PDO::FETCH_ASSOC);
+
+				$rtnObj->name = $nameObj['FirstName']." ".$nameObj['LastName'];
+				//echo json_encode($dataObj);
+				$rtnObj->data = $dataObj;
+				$rtnObj->setStatus(0);
+		    	$rtnObj->setMessage('Success');
+
+
+			}
+		}
+		catch(Exception $e)
+		{
+		  echo $e->getMessage();
+		}
+		echo json_encode($rtnObj);
 
 	}
 

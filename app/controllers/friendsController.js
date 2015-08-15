@@ -27,6 +27,17 @@ app.controller('friendsController', function ($scope, bookService, $q, sharedSer
 		});
 	};
 
+	$scope.viewFriend = function (UserID)
+	{
+		console.log("test");
+	};
+
+	$scope.removeFromList = function (index)
+	{
+		//remove index from $scope.findFriends
+		$scope.findFriends.splice(index,1);
+	}
+
 	$scope.findFriends();
 
 
