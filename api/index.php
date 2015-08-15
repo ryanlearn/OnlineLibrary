@@ -31,7 +31,7 @@
 				$input = json_decode($body);
 
 				$params = array($input->UserID);
-				$query = $conn->prepare("SELECT Book.*
+				$query = $conn->prepare("SELECT Book.*, Inventory.StarRating, Inventory.Read, Inventory.InStock
 											FROM Inventory
 											INNER JOIN Book
 											ON Inventory.BookID=Book.BookID
@@ -259,7 +259,7 @@
 		if (loggedIn()){
 			$conn = dbConnect();
 			$params = array($_SESSION['UserID']);
-			$query = $conn->prepare("SELECT Book.*
+			$query = $conn->prepare("SELECT Book.*, Inventory.StarRating, Inventory.Read, Inventory.InStock
 										FROM Inventory
 										INNER JOIN Book
 										ON Inventory.BookID=Book.BookID
@@ -277,7 +277,7 @@
 		if (loggedIn()){
 			$conn = dbConnect();
 
-			$query = $conn->prepare("SELECT Book.*, pop.Num FROM
+			$query = $conn->prepare("SELECT Book.*, pop.Num, Inventory.StarRating, Inventory.Read, Inventory.InStock FROM
 										(SELECT Book.BookID, count(Title) as Num
 										FROM Inventory
 										INNER JOIN Book

@@ -15,9 +15,16 @@
         <li><a href="#friends">Friends</a></li>
         <li><a href="#popular">Popular Books</a></li>
       </ul>
-       <div class="input-group" style="float: right; margin-top: 8px;">
-          <input type="text" class="form-control" placeholder="Filter Books..." ng-model="searchBooks">
-       </div><!-- /input-group -->
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+         <div class="input-group" style="margin-top: 8px;">
+            <input type="text" class="form-control" placeholder="Filter Books..." ng-model="searchBooks">
+         </div><!-- /input-group -->
+        </li>
+        <li>
+          <a href="/#" ng-click="logout()">Logout</a>
+        </li>
+      </ul>
     </div><!--/.nav-collapse -->
   </div>
 </div>
