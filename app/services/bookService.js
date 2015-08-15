@@ -146,7 +146,7 @@ app.service('bookService', function ($resource, $q) {
 			Author: Author
 		},function(){
 			if (res.status == 0) {
-				deferred.resolve(res);
+				deferred.resolve(res.data);
 			} else {
 				deferred.reject(res);
 			}

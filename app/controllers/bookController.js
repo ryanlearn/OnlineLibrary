@@ -1,7 +1,7 @@
 /** Adapt User Controller
 *@class UserController
 */
-app.controller('bookController', function ($scope, $location, $rootScope, adaptUserService, bookService, $q, $timeout, sharedService, $window, $routeParams) {
+app.controller('bookController', function ($scope, $location, $rootScope, adaptUserService, bookService, $q, $timeout, sharedService, $window, $routeParams, $route) {
 	
 $scope.testpass = "asdf";
 $scope.showBorrowed = "false";
@@ -9,6 +9,7 @@ $scope.searchBooks   = '';
 $scope.showRegistrationAlert = 0;
 $scope.showBookSearchError = 0;
 $scope.myBooks = 0;
+
 
 if ($routeParams.UserID){
 	$scope.name = "Someone Else's";	
@@ -21,15 +22,19 @@ if ($routeParams.UserID){
 		$scope.books = reason;
 	});	
 }else{
-	$scope.myBooks = 1;
-	$scope.name = "My Library";
-	var promise = bookService.getMyBooks();
-	promise.then(function(value){
-		$scope.books = value;
+	if (!$scope.books){
 
-	}, function(reason) {
-		$scope.books = reason;
-	});	
+		var promise = bookService.getMyBooks();
+		promise.then(function(value){
+			$scope.books = value;
+
+		}, function(reason) {
+			$scope.books = reason;
+		});			
+	}
+	$scope.name = "My Library";
+	$scope.myBooks = 1;
+
 }
 
 
@@ -57,6 +62,7 @@ if ($routeParams.UserID){
 		});
 	};
 
+//get rid of this. Should only happen on popular books page
 $scope.getPopularBooks();
 
 
@@ -97,13 +103,22 @@ $scope.getPopularBooks();
 			promise.then(function(value){
 				$scope.addBookRes = value;
 				$scope.cancel();
-				$scope.getMyBooks();
+
+				//console.dir($scope.books);
+				//add this book to my shelf
+				//$scope.books.push(value);
+				//$window.location = '#/home';
+				$route.reload();
+
+				//console.dir($scope.books);
+				//sort shelf
 
 			}, function(reason) {
 				$scope.addBookRes = reason;
 			});
 
 		};
+
 
 
 	    $scope.showConfirm = function (abook)

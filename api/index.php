@@ -171,7 +171,7 @@
 				$query->bindParam(":password", $password, PDO::PARAM_STR);
 				$query->execute();
 
-		        $_SESSION['UserID'] = $conn->lastInsertId();;
+		        $_SESSION['UserID'] = $conn->lastInsertId();
 		        $_SESSION['isLoggedIn'] = true;
 
 				$rtnObj->setStatus(0);
@@ -388,7 +388,17 @@
 		$inventoryQry->bindParam(":SpecialNotes", $SpecialNotes, PDO::PARAM_STR);
 		$inventoryQry->execute();
 
+		//return the book so it can be added to the shelf
+		$params = array($BookID);
+		$query = $conn->prepare("SELECT *
+									FROM Book
+									WHERE BookID = ?");
+		$query->execute($params);
+		$dataObj = $query->fetch(PDO::FETCH_ASSOC);		
+
 		$rtnObj->setStatus(0);
+		$rtnObj->data = $dataObj;
+
 		echo json_encode($rtnObj);
 
 
