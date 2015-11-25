@@ -7,5 +7,7 @@ New Test Change
 
 Test Conflict
 
+Test mention bot
+
 Another Change!
 
