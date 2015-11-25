@@ -5,4 +5,7 @@ Test Change
 
 New Test Change
 
+Test Conflict
+
 Another Change!
+
